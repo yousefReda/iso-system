@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sidebar-w: 264px;
+}
+
+html {
+  font-family: var(--font-cairo), Cairo, sans-serif;
+}
+html[lang='en'] body {
+  font-family: var(--font-inter), Inter, var(--font-cairo), sans-serif;
+}
+
+body {
+  @apply bg-surface-gray text-navy-900 antialiased;
+}
+
+.dark body {
+  @apply bg-navy-900 text-slate-100;
+}
+
+* {
+  transition-property: background-color, border-color, color, box-shadow, transform, opacity;
+  transition-duration: 200ms;
+}
+
+/* ===== بطاقات وعناصر أساسية ===== */
+.card {
+  @apply rounded-xl bg-white shadow-card border border-surface-border dark:bg-navy-800 dark:border-navy-600;
+}
+.card-hover {
+  @apply hover:shadow-card-hover hover:-translate-y-0.5;
+}
+.input {
+  @apply w-full rounded-lg border border-surface-border bg-white px-3 py-2 text-sm text-navy-900 outline-none focus:border-navy-500 focus:ring-2 focus:ring-navy-100 dark:bg-navy-900 dark:border-navy-600 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:ring-navy-700;
+}
+.label {
+  @apply mb-1 block text-sm font-semibold text-navy-700 dark:text-slate-200;
+}
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-primary {
+  @apply btn bg-navy-700 text-white hover:bg-navy-600 active:bg-navy-800 dark:bg-navy-500 dark:hover:bg-navy-400;
+}
+.btn-gold {
+  @apply btn bg-gold text-navy-900 hover:bg-gold-600 hover:text-white;
+}
+.btn-outline {
+  @apply btn border border-surface-border bg-white text-navy-700 hover:bg-navy-50 dark:bg-navy-800 dark:text-slate-100 dark:border-navy-600 dark:hover:bg-navy-700;
+}
+.btn-danger {
+  @apply btn bg-status-red text-white hover:opacity-90;
+}
+.skeleton {
+  @apply animate-pulse rounded-md bg-navy-100 dark:bg-navy-700;
+}
+
+/* ===== إصلاح تباين النصوص في الوضع الليلي =====
+   النصوص الكحلية الداكنة تنقلب لدرجات فاتحة واضحة */
+.dark .text-navy-900 { color: #f8fafc; }
+.dark .text-navy-800 { color: #f1f5f9; }
+.dark .text-navy-700 { color: #e2e8f0; }
+.dark .text-navy-600 { color: #cbd5e1; }
+.dark .text-navy-500 { color: #a9bede; }
+.dark .text-navy-400 { color: #8fa3c4; }
+.dark .text-navy-300 { color: #64748b; }
+.dark .bg-navy-50 { background-color: #142b50; }
+.dark .bg-surface-gray { background-color: #0d1c35; }
+.dark .bg-red-50 { background-color: rgba(192, 57, 43, 0.15); }
+.dark .bg-green-50 { background-color: rgba(26, 122, 74, 0.15); }
+.dark .bg-gold-50 { background-color: rgba(232, 160, 32, 0.15); }
+.dark .bg-blue-50 { background-color: rgba(46, 95, 163, 0.2); }
+.dark .bg-slate-100 { background-color: #1e293b; }
+.dark .text-slate-500 { color: #94a3b8; }
+.dark .text-status-red { color: #e57368; }
+.dark .text-status-green { color: #4ade80; }
+.dark .text-gold-600 { color: #f0b451; }
+
+/* ===== النماذج الرسمية: تبقى بمظهر الورق حتى في الوضع الليلي ===== */
+.form-doc {
+  background: #ffffff !important;
+  color: #142b50 !important;
+}
+.form-doc .text-navy-900, .form-doc .text-navy-800, .form-doc .text-navy-700 { color: #1b3a6b !important; }
+.form-doc .text-navy-500, .form-doc .text-navy-600 { color: #2e5fa3 !important; }
+.form-doc .text-navy-400 { color: #527dbc !important; }
+.form-doc table {
+  @apply w-full border-collapse text-sm;
+}
+.form-doc td,
+.form-doc th {
+  border: 1px solid #7e9ecd;
+  @apply px-2 py-1.5 align-top;
+  text-align: start;
+}
+.form-doc th {
+  background: #edf1f8 !important;
+  color: #142b50 !important;
+  @apply font-bold;
+}
+.form-field-yellow {
+  background: #fefce8 !important;
+  border: 1px solid #fde047;
+  color: #142b50 !important;
+  @apply rounded px-1.5 py-0.5 min-w-[60px] inline-block;
+}
+
+/* ===== الطباعة ===== */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white !important; }
+  main { margin: 0 !important; padding: 0 !important; }
+  .print-area { box-shadow: none !important; border: none !important; border-radius: 0 !important; }
+  .form-field-yellow { background: white !important; border-color: #ccc !important; }
+}
+
+/* ===== لوحة الشات: تنزلق من الطرف حسب الاتجاه ===== */
+@keyframes slide-in-end-ltr { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes slide-in-end-rtl { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+.chat-slide { animation: slide-in-end-ltr 0.25s ease-out; }
+[dir='rtl'] .chat-slide { animation: slide-in-end-rtl 0.25s ease-out; }
+
+/* ===== سكرول ===== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { @apply rounded-full bg-navy-200 dark:bg-navy-600; }
